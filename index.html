@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Diagnostic Benchmark and Iterative Inpainting for Layout-Guided Image Generation">
+  <meta name="keywords" content="LayoutBench, IterInpaint, Text-to-Image Generation, Layout-Guided Image Generation, Evaluation, Iterative">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LayoutBench and IterInpaint (2023)</title>  
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script> -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <!-- <script src="https://unpkg.com/freezeframe"></script> -->
+
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!-- <link rel="icon" href="./static/images/favicon.svg"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <!-- <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://keunhong.com">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div> -->
+</nav>
+
+<!-- Jaemin Cho ( UNC Chapel Hill ) < jmincho@cs.unc.edu>
+  Linjie Li ( Microsoft ) < Lindsey.Li@microsoft.com>
+    Zhengyuan Yang ( Microsoft ) < zhengyuan.yang13@gmail.com>
+      Zhe Gan ( Microsoft ) < pkuganzhe@gmail.com>
+        Lijuan Wang ( Microsoft ) < lijuanw@microsoft.com>
+          Mohit Bansal ( University of North Carolina at Chapel Hill ) < mbansal@cs.unc.edu> -->
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Diagnostic Benchmark and Iterative Inpainting for Layout-Guided Image Generation</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://j-min.io/">Jaemin Cho</a><sup>1</sup>,</span>
+            <span class="author-block">
+              
+            <span class="author-block">
+              <a href="https://www.microsoft.com/en-us/research/people/linjli/">Linjie Li</a><sup>2</sup>,</span>
+            
+            <span class="author-block">
+              <a href="https://zyang-ur.github.io/">Zhengyuan Yang</a><sup>2</sup>,</span>
+
+            <span class="author-block">
+              <a href="https://zhegan27.github.io/">Zhe Gan</a><sup>2</sup>,</span>
+
+            
+            <span class="author-block">
+              <a href="https://www.microsoft.com/en-us/research/people/lijuanw/">Lijuan Wang</a><sup>2</sup>,</span>
+
+            <span class="author-block">
+              <a href="https://www.cs.unc.edu/~mbansal/">Mohit Bansal</a><sup>1</sup>
+            </span>
+
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of North Carolina at Chapel Hill,</span>
+            <span class="author-block"><sup>2</sup>Microsoft Research</span>
+          </div>
+          <!-- <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>*</sup>Equal contribution</span>
+          </div> -->
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <!-- <span class="link-block">
+                <a href="https://arxiv.org/pdf/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span> -->
+              <span class="link-block">
+                <a href="https://LayoutBench.github.io"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <!-- <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span> -->
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://github.com/j-min/LayoutBench"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>LayoutBench</span>
+                  </a>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/j-min/IterInpaint"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>IterInpaint</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <h4 class="subtitle has-text-centered">
+  <b>HiREST</b>: a holistic, hierarchical benchmark (+joint model) of multimodal retrieval and step-by-step summarization for
+  videos.
+</h4>
+
+<br> -->
+
+
+<section class="hero teaser">
+  <!-- <div class="container is-max-desktop"> -->
+  <div class="container" >
+    <div class="hero-body">
+      <!-- <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/teaser.mp4"
+                type="video/mp4">
+      </video> -->
+      <!-- Image teaser -->
+      <!-- <embed src="./static/images/main_figure.pdf" alt="Teaser" width="100%"> -->
+
+      
+      
+      <!-- </h2> -->
+
+      <center><img src="./static/images/teaser_ID_OOD.png" alt="Teaser" width="85%"></center>
+      <!-- <h2 class="subtitle has-text-centered"> -->
+
+        <!-- # reco https://arxiv.org/abs/2211.15518
+        # ldm https://arxiv.org/abs/2112.10752 -->
+
+      <div class="content has-text-justified">
+        <b>LayoutBench</b> evaluates layout-guided image generation models with out-of-distribution (OOD) layouts in four
+        skills: number, position, size, and shape. Existing models (b) <a href="https://arxiv.org/abs/2112.10752">LDM</a> and (c) <a href="https://arxiv.org/abs/2211.15518">ReCo</a> fail on OOD layouts by
+        misplacing objects. We propose (d) <b>IterInpaint</b>, a new baseline with better generalization on OOD layouts.
+      </div>
+        
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+          Spatial control is a core capability in controllable image generation, and aims to generate images that follow the
+          spatial input configurations. Advancements in layout-to-image generation have shown promising results on <i>in-distribution
+          (ID)</i> datasets with similar spatial configurations. However, it is unclear how these models perform when facing
+          <i>out-of-distribution (OOD)</i> samples with arbitrary, unseen layouts.
+          </p>
+          <p>
+          In this paper, we propose <b>LayoutBench</b>, a diagnostic
+          benchmark that examines four categories of spatial control skills: number, position, size, and shape. We benchmark two
+          recent representative layout-guided image generation methods and observe that the good ID layout control may not
+          generalize well to arbitrary layouts in the wild (e.g., objects at boundary).
+          </p>
+          <p>
+          Next, we propose <b>IterInpaint</b>, a new
+          baseline that generates foreground and background regions in a step-by-step manner via inpainting, demonstrating
+          stronger generalizability than existing models on OOD layouts in LayoutBench.
+          </p>
+          <p>
+          We perform quantitative and qualitative
+          evaluation and fine-grained analysis on the four LayoutBench skills to pinpoint the weaknesses of existing models.
+          Lastly, we show comprehensive ablation studies on IterInpaint, including training task ratio, crop&paste vs. repaint,
+          and generation order.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+    <!-- <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div> -->
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">LayoutBench: a New Diagnostic Benchmark for Layout-Guided Image Generation</h2>
+
+
+        <h3 class="title is-4">ID vs. OOD Layouts in four spatial control skills</h3>
+
+        <div class="content has-text-justified">
+          We measure 4 spatial control skills (number, position, size, shape),
+          where each skill consists of 2 OOD layout splits, i.e., in total 8 tasks = 4 skills x 2 splits.
+          To disentangle spatial control from other aspects in image generation, such as generating diverse objects, 
+          LayoutBench keeps the object configurations of <a href="https://cs.stanford.edu/people/jcjohns/clevr/">CLEVR</a>, and
+          changes the spatial layouts.
+          Below images show example ID (CLEVR) and OOD (LayoutBench) layouts. GT boxes are shown in <a style="color:blue">blue</a>.
+        </div>
+
+        <img src="./static/images/CLEVR_vs_LayoutBench.png" alt="Teaser" width="100%">
+
+        <br><br>
+
+        <h3 class="title is-4">Evaluation Process with LayoutBench</h3>
+        <div class="content has-text-justified">
+          We test the OOD layout skills of models trained on CLEVR (ID) dataset.
+          First, 1) we query the image generation models with OOD layouts. Then, 2) we detect the objects from the
+          generated images, and calculate the layout accuracy in average precision (AP), with an object detector.
+          As shown below, existing models often misplaces objects in OOD Layouts from LayoutBench, which motivates us to proposed IterInpaint, a new baseline for layout-guided image generation.
+
+        </div>
+
+        <img src="./static/images/task_overview.png" alt="Teaser" width="100%">
+      
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">IterInpaint: a New Baseline for Layout-Guided Image Generation</h2>
+        <div class="content has-text-justified">
+
+          We propose IterInpaint, a new baseline for layout-guided image generation.
+          Unlike previous methods that generate all objects in a single step,
+          IterInpaint decomposes the image generation process into multiple steps
+          and uses a text-guided inpainting model to update foreground and background regions step-by-step.
+          This decomposition makes each generation step easier by allowing the model to focus on generating a single foreground object or background.
+          
+          We implement IterInpaint by extending Stable Diffusion, a public text-to-image model based on LDM.
+          To enable inpainting, we extend the U-Net of Stable Diffusion to take the mask and a context image as additional inputs.
+          
+        </div>        
+
+        <h3 class="title is-4">Training</h3>
+        <div class="content has-text-justified">
+          We use a single objective to cover both foreground/background inpainting by giving IterInpaint a different context image and mask:
+          (1) foreground inpainting - 
+          from N GT objects, sample context objects to show, then sample an object to generate;
+          (2) background inpainting - 
+          mask out all objects, and generate the background.
+        </div>
+        <img src="./static/images/training_doublecolumn.png" alt="Teaser" width="100%">
+
+        <br><br><br>
+        <h3 class="title is-4">Inference</h3>
+        <div class="content has-text-justified">
+          We start from a blank image and iteratively update foreground objects and background.
+          For each generation step, we provide the inpainting model
+          (1) a context image (initialized with a blank image for the first object),
+          (2) a text prompt,
+          (3) a binary mask,
+          to obtain a generated image.
+          Then we update the image by composing it with a mask.
+          IterInpaint generate the final image with N+1 (foreground+background) iterations.
+          Users can control the generation order of each region and interactively manipulate the image from an intermediate generation step.        
+        </div>
+        <img src="./static/images/iterinpaint_inference.png" alt="Teaser" width="100%">
+
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Evaluation Results</h2>
+        <div class="content has-text-justified">
+
+          We evaluate two recent and strong layout-guided image generation models, <a href="https://arxiv.org/abs/2112.10752">LDM</a> and <a href="https://arxiv.org/abs/2211.15518">ReCo</a>, and our IterInpaint.
+          For quantitative evaluation, we measure the layout accuracy with average precision (AP) and image quality with FID/SceneFID.
+          We also conduct qualitative evaluations, and more detailed fine-grained skill analysis.
+
+        </div>
+
+        <h3 class="title is-4">Quantitative Evaluation - Layout Accuracy</h3>
+        <div class="content has-text-justified">
+          <p>
+            The first row shows the layout accuracy based on GT images.
+            Our object detector can achieve high accuracy on both CLEVR and LayoutBench datasets, showing the high reliability.
+            The second row (GT shuffled) shows a setting where a given target layout, we randomly sample an image from the GT
+            images to be the generated image.
+            The 0% AP on both CLEVR and LayoutBench means that it is impossible to obtain high AP by only generating high-fidlity
+            images but in the wrong layouts.
+          </p>
+          <p>
+            As shown in the bottom half of the table,
+            while all three models achieve high layout accuracy on CLEVR,
+            the layout accuracy drop by large marigns on LayoutBench, showing the ID-OOD layout gap.
+            Specifically, LDM and ReCo fail substantially on LayoutBench across all skill splits,
+            with an average drop of 57~70% per skill on AP<sub>50</sub>,
+            compared to the high AP on in-domain CLEVR validation split.
+
+            In contrast, IterInpaint generalize better to OOD layouts in LayoutBench, while maintining or even slightly improving layout accuracy on ID layouts in CLEVR.
+          </p>
+        </div>
+        <img src="./static/images/layout_accuracy_table.png" alt="Teaser" width="100%">
+        Layout accuracy in AP/AP<sub>50</sub>(%) on CLEVR and LayoutBench. Best (highest) values are in bold.
+
+        <br><br><br>
+        <h3 class="title is-4">Quantitative Evaluation - Image Quality</h3>
+        <div class="content has-text-justified">
+          On CLEVR, LDM/ReCo achieves better FID/SceneFID than IterInpint,
+          indicating that strong layout control performance of IterImpaint comes with a trade-off in these image quality metrics.
+
+          However, on LayoutBench, the three models achieve similar FID scores,
+          despite the significant layout errors of LDM and ReCo,
+          which suggests that image quality measures alone are not sufficient for evaluating layout-guided image generation
+          and further justify using layout accuracy to examine layout control closely.
+        </div>
+        <img src="./static/images/FID_table.png" alt="Teaser" width="55%">
+        <br>
+        Image Quality in FID/SceneFID on CLEVR and LayoutBench. Best (lowest) values are in bold.
+
+        <br><br><br>
+        <h3 class="title is-4">Qualitative Evaluation</h3>
+        <div class="content has-text-justified">
+          On CLEVR, all three models can follow the ID layout inputs to place the correct objects precisely.
+          On LayoutBench, LDM and ReCo often
+          make mistakes, such as
+          generating objects that are much  smaller (e.g., Number-few) / bigger (e.g., Size-tiny, Position-center) than the given bounding boxes,
+          and missing some objects (e.g., Number-many, Position-center, Position-boundary, Size-large).
+          However, IterInpaint can generate objects that are more accurately aligned to the given bounding boxes in general, which
+          are consistent with the higher layout accuracy.
+          Especially for the extreme small bounding boxes in Size-tiny, only IterInpaint, among the three models, generates objects
+          that fit.
+        </div>
+        <img src="./static/images/models_comparison_generation_examples.png" alt="Teaser" width="100%">
+        Comparison of generated images on CLEVR (ID) and LayoutBench (OOD). GT boxes are shown in <a style="color:blue">blue</a>.
+
+
+        <br><br><br>
+        <h3 class="title is-4">Fine-grained Skill Analysis</h3>
+        <div class="content has-text-justified">
+          We perform a more detailed analysis on each LayoutBench skill to understand better the challenges presented in
+          LayoutBench and to examine the weakness of each method.
+          Specifically, we divide the 4 skills into more fine-grained splits to cover both ID (CLEVR) and OOD (LayoutBench) configurations.
+          
+          We sample 200 images for each split and report layout accuracy.
+             
+          Comparing across 4 skills,
+          the majority of Size skill splits (except for size=2) are the least challenging, while the Position/Number skill is the
+          most challenging. IterInpaint significantly outperforms LDM and ReCo on all splits.
+          Among the other two, LDM has slightly higher scores than ReCo in general.
+
+          
+        </div>
+        <img src="./static/images/fine_grained_analysis.png" alt="Teaser" width="100%">
+        Detailed layout accuracy analysis with fine-grained splits of 4 LayoutBench skills.
+        In-distribution (same attributes to CLEVR) splits are colored in <a style="color:gray">gray</a>,
+        For the Shape skill, the splits are named after their height/width ratio (e.g. H2W1
+        split consists of the objects with a 2:1 ratio of height:width).
+        
+
+
+
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Additional IterInpaint Generation Examples</h2>
+      
+
+        <div class="columns is-centered">
+        
+          <div class="column">
+            <h3 class="title is-4">User-defined Layouts</h3>
+              <div class="content has-text-justified">
+                <p>
+                  We show three input layouts:
+                  (1) two rows of objects with different sizes,
+                  (2) ‘AI’ written in the text,
+                  and (3) a heart shape.
+                  While ReCo often fails to ignore or misplace some objects, IterInpaint places objects significantly more accurately.
+                </p>
+              </div>
+              <img src="./static/images/iterinpaint_user_defined_layouts.png" alt="Teaser" width="100%">
+          </div>
+        
+          <div class="column">
+            <h3 class="title is-4">Interactive Image Manipulation</h3>
+                <div class="content has-text-justified">
+                  <p>
+                    With IterInpaint, users can interatively manipulate images with a binary mask and a text prompt, to add or remove objects at arbitrary locations.
+                  </p>
+                </div>
+                <img src="./static/images/iterinpaint_interactive_example.png" alt="Teaser" width="90%">
+          </div>
+
+
+        </div>
+
+        <h3 class="title is-4">Crop & Paste vs. Repaint</h3>
+        
+        <div class="content has-text-justified">
+          Instead of the default crop&paste, we experiment the repainting the entire image during the inference.
+          Repaint-based update encodes/decodes the whole image at each
+          step and suffers from error propagation (i.e., early objects get distorted with step progress).
+        
+        </div>
+        
+        <div class="columns is-centered">
+          <div class="column">
+            <h4 class="title is-5">Crop & Paste (Default)</h4>
+            <img src="./static/gifs/LayoutBench_val_number_11-13_001680.gif" alt="Teaser" width="100%">
+          </div>
+          <div class="column">
+            <h4 class="title is-5">Repaint</h4>
+            <img src="./static/gifs/Nopaste_LayoutBench_val_number_11-13_001680.gif" alt="Teaser" width="100%">
+          </div>
+        </div>
+
+        <!-- <h3 class="title is-4">More Intermediate Generations with OOD Layouts</h3>
+
+        <div class="columns is-centered">
+          <div class="column">
+            <h4 class="title is-5">Few (5) objects</h4>
+
+            <img class="freezeframe" src="./static/gifs/LayoutBench_val_number_3-5_001030.png" alt="Teaser" width="100%" id="sync_gif_1">
+
+            <img class="freezeframe" src="./static/gifs/LayoutBench_val_number_3-5_001030.gif" alt="Teaser" width="100%" id="sync_gif_1">
+          </div>
+          <div class="column">
+            <h4 class="title is-5">7 objects</h4>
+            <img class="freezeframe" src="./static/gifs/LayoutBench_val_number_6-8_001218.gif" alt="Teaser" width="100%" id="sync_gif_2">
+          </div>
+          <div class="column">
+            <h4 class="title is-5">Many (13) objects</h4>
+
+            <img class="freezeframe" src="./static/gifs/LayoutBench_val_number_11-13_001640.png" alt="Teaser" width="100%" id="sync_gif_3">
+
+            <img class="freezeframe" src="./static/gifs/LayoutBench_val_number_11-13_001640.gif" alt="Teaser" width="100%" id="sync_gif_3">
+          </div>
+          <div class="column">
+            <h4 class="title is-5">Large objects</h4>
+
+            <img class="freezeframe" src="./static/gifs/LayoutBench_val_size_110_001984.png" alt="Teaser" width="100%" id="sync_gif_4">
+            <img class="freezeframe" src="./static/gifs/LayoutBench_val_size_110_001984.gif" alt="Teaser" width="100%" id="sync_gif_4">
+          </div>
+        </div> -->
+
+        <!-- <script>
+          const gifs = document.querySelectorAll('.freezeframe');
+          const ffInstances = [];
+          let playing = false;
+
+          // Initialize Freezeframe.js instances and pause all GIFs initially
+          gifs.forEach(gif => {
+            const ff = new freezeframe(gif, { trigger: false });
+            ffInstances.push(ff);
+            ff.stop();
+          });
+
+          // Function to start playing all GIFs
+          const playAll = () => {
+            if (!playing) {
+              ffInstances.forEach(ff => ff.start());
+              playing = true;
+            }
+          };
+
+          // Attach event listeners to play GIFs when all have finished loading
+          let loadedCount = 0;
+          gifs.forEach(gif => {
+            gif.addEventListener('load', () => {
+              loadedCount++;
+              if (loadedCount === gifs.length) {
+                playAll();
+              }
+            });
+          });
+        </script> -->
+
+
+
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- <section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Hierarchical Video Information Retrieval</h2>
+        <div class="content has-text-justified">
+
+        <p>
+          
+        </p>
+
+        </div>
+
+        <img src="./static/images/model_vs_gt_generation_example.png" alt="Teaser" width="100%">
+
+      </div>
+    </div>
+  </div>
+</section> -->
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Citation</h2>
+    Please cite our paper if you use our dataset and/or method in your projects.
+    <br><br>
+
+    <pre><code>@article{Cho2023LayoutBench,
+  author = {Jaemin Cho and Linjie Li and Zhengyuan Yang and Zhe Gan and Lijuan Wang and Mohit Bansal},
+  title = {Diagnostic Benchmark and Iterative Inpainting for Layout-Guided Image Generation},
+  year = {2023},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <!-- <a class="icon-link" href="https://arxiv.org/abs/2303.16406">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/j-min/HiREST" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a> -->
+    </div>
+    <div class="columns is-centered">
+      <!-- <div class="column is-8"> -->
+      <div class="content">
+        <!-- <p> -->
+        The webpage was adapted from <a href="https://github.com/nerfies/nerfies.github.io">nerfies</a>.
+        <!-- </p> -->
+      </div>
+      <!-- </div> -->
+    </div>
+  </div>
+</footer>
+
+</body>
+
+</html>
