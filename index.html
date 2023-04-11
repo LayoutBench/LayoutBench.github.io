@@ -213,7 +213,9 @@
       
       <!-- </h2> -->
 
-      <center><img src="./static/images/teaser_ID_OOD.png" alt="Teaser" width="85%"></center>
+      <center>
+        <img src="./static/images/teaser_ID_OOD.png" alt="Teaser" width="80%">
+      </center>
       <!-- <h2 class="subtitle has-text-centered"> -->
 
         <!-- # reco https://arxiv.org/abs/2211.15518
@@ -222,8 +224,21 @@
       <div class="content has-text-justified">
         <b>LayoutBench</b> evaluates layout-guided image generation models with out-of-distribution (OOD) layouts in four
         skills: number, position, size, and shape. Existing models (b) <a href="https://arxiv.org/abs/2112.10752">LDM</a> and (c) <a href="https://arxiv.org/abs/2211.15518">ReCo</a> fail on OOD layouts by
-        misplacing objects. We propose (d) <b>IterInpaint</b>, a new baseline with better generalization on OOD layouts.
+        misplacing objects. (d) <b>IterInpaint</b>, is our new baseline with better generalization on OOD layouts.
       </div>
+
+      <center>
+        <img src="./static/images/iterinpaint_inference.png" alt="Teaser" width="90%">
+      </center>
+      <div class="content has-text-justified">
+        <b>IterInpaint</b> is a new baseline for layout-guided image generation.
+        Unlike previous methods that generate all objects in a single step,
+        IterInpaint decomposes the image generation process into multiple steps
+        and uses an inpainting model to update regions step-by-step.
+        This decomposition makes each generation step easier by allowing the model to focus on generating a single foreground
+        object or background.
+      </div>
+      
         
     </div>
   </div>
@@ -484,6 +499,7 @@
                   (2) ‘AI’ written in the text,
                   and (3) a heart shape.
                   While ReCo often fails to ignore or misplace some objects, IterInpaint places objects significantly more accurately.
+                  We show the generation process of these images in the bottom.
                 </p>
               </div>
               <img src="./static/images/iterinpaint_user_defined_layouts.png" alt="Teaser" width="100%">
@@ -522,9 +538,98 @@
           </div>
         </div>
 
-        <!-- <h3 class="title is-4">More Intermediate Generations with OOD Layouts</h3>
+        <h3 class="title is-4">Generations with User-defined Layouts in Arbitrary orders</h3>
+
+
+        <h4 class="title is-5">Two rows (8 objects)</h4>
+        
+        <div class="columns is-centered">
+          <div class="column">
+            <img class="freezeframe" src="./static/gifs/user_defined_layouts/eight_objects_two_rows_0.gif" alt="Teaser" width="100%" id="sync_gif_1">
+          </div>
+          
+          <div class="column">
+            <img class="freezeframe" src="./static/gifs/user_defined_layouts/eight_objects_two_rows_1.gif" alt="Teaser" width="100%" id="sync_gif_1">
+          </div>
+
+          <div class="column">
+            <img class="freezeframe" src="./static/gifs/user_defined_layouts/eight_objects_two_rows_2.gif" alt="Teaser" width="100%" id="sync_gif_1">
+          </div>
+
+          <div class="column">
+            <img class="freezeframe" src="./static/gifs/user_defined_layouts/eight_objects_two_rows_5.gif" alt="Teaser" width="100%" id="sync_gif_1">
+          </div>
+
+          <div class="column">
+            <img class="freezeframe" src="./static/gifs/user_defined_layouts/eight_objects_two_rows_4.gif" alt="Teaser" width="100%" id="sync_gif_1">
+          </div>
+
+        </div>
+
+        <h4 class="title is-5">"AI" (16 objects)</h4>
+        
+        <div class="columns is-centered">
+          <div class="column">
+            <img class="freezeframe" src="./static/gifs/user_defined_layouts/AI_0.gif" alt="Teaser"
+              width="100%" id="sync_gif_1">
+          </div>
+        
+          <div class="column">
+            <img class="freezeframe" src="./static/gifs/user_defined_layouts/AI_1.gif" alt="Teaser"
+              width="100%" id="sync_gif_1">
+          </div>
+        
+          <div class="column">
+            <img class="freezeframe" src="./static/gifs/user_defined_layouts/AI_2.gif" alt="Teaser"
+              width="100%" id="sync_gif_1">
+          </div>
+        
+          <div class="column">
+            <img class="freezeframe" src="./static/gifs/user_defined_layouts/AI_5.gif" alt="Teaser"
+              width="100%" id="sync_gif_1">
+          </div>
+        
+          <div class="column">
+            <img class="freezeframe" src="./static/gifs/user_defined_layouts/AI_4.gif" alt="Teaser"
+              width="100%" id="sync_gif_1">
+          </div>
+        
+        </div>
+
+        <h4 class="title is-5">Heart (20 objects)</h4>
 
         <div class="columns is-centered">
+          <div class="column">
+            <img class="freezeframe" src="./static/gifs/user_defined_layouts/heart_0.gif" alt="Teaser" width="100%"
+              id="sync_gif_1">
+          </div>
+        
+          <div class="column">
+            <img class="freezeframe" src="./static/gifs/user_defined_layouts/heart_1.gif" alt="Teaser" width="100%"
+              id="sync_gif_1">
+          </div>
+        
+          <div class="column">
+            <img class="freezeframe" src="./static/gifs/user_defined_layouts/heart_2.gif" alt="Teaser" width="100%"
+              id="sync_gif_1">
+          </div>
+        
+          <div class="column">
+            <img class="freezeframe" src="./static/gifs/user_defined_layouts/heart_5.gif" alt="Teaser" width="100%"
+              id="sync_gif_1">
+          </div>
+        
+          <div class="column">
+            <img class="freezeframe" src="./static/gifs/user_defined_layouts/heart_4.gif" alt="Teaser" width="100%"
+              id="sync_gif_1">
+          </div>
+        
+        </div>
+
+
+
+
+        <!-- <div class="columns is-centered">
           <div class="column">
             <h4 class="title is-5">Few (5) objects</h4>
 
@@ -581,7 +686,9 @@
               }
             });
           });
-        </script> -->
+        </script>
+
+        -->
 
 
 
