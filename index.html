@@ -544,7 +544,17 @@
           </div>
         </div>
 
-        <h3 class="title is-4">Generations with User-defined Layouts in Arbitrary orders</h3>
+        <h3 class="title is-4">Arbitrary-order Generation with User-defined Layouts</h3>
+        <div class="content has-text-justified">
+          Existing iterative text-to-image generation models either
+          update entire images at each step (e.g., Stable Diffusion),
+          or update fixed-shaped patches and are sensitive in generative orders (e.g., DALL-E, X-LXMERT).
+          <!-- Unlike existing autoregressive (e.g., DALL-E) or non-autoregressive (e.g., X-LXMERT) text-to-image generation models, -->
+          In contrast, IterInpaint is able to generate images by updating differnt-shaped regions sizes in arbitrary orders.
+          We experiment with different generation orders (e.g., random, top-to-bottom, bottom-to-top, big-to-small, small-to-big etc.),
+          and found that IterInpaint is not sensitive in generation orders.
+          This allows users to manipulate object layouts without the need to re-generate images from scratch.
+        </div>
 
 
         <h4 class="title is-5">Two rows (8 objects)</h4>
