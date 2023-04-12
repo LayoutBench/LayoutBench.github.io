@@ -164,3 +164,17 @@ body {
   margin: 0 auto;
   /* Center the container */
 }
+
+.columns {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.column {
+  flex-basis: 20%;
+  /* Each column occupies 20% of the container's width */
+  box-sizing: border-box;
+  /* Include padding and border in the element's total width and height */
+  padding: 10px;
+  /* Add padding to each column */
+}
