@@ -53,47 +53,10 @@
       <span aria-hidden="true"></span>
     </a>
   </div>
-  <!-- <div class="navbar-menu">
-    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="https://keunhong.com">
-      <span class="icon">
-          <i class="fas fa-home"></i>
-      </span>
-      </a>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More Research
-        </a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="https://hypernerf.github.io">
-            HyperNeRF
-          </a>
-          <a class="navbar-item" href="https://nerfies.github.io">
-            Nerfies
-          </a>
-          <a class="navbar-item" href="https://latentfusion.github.io">
-            LatentFusion
-          </a>
-          <a class="navbar-item" href="https://photoshape.github.io">
-            PhotoShape
-          </a>
-        </div>
-      </div>
-    </div>
-
-  </div> -->
+  
 </nav>
 
-<!-- Jaemin Cho ( UNC Chapel Hill ) < jmincho@cs.unc.edu>
-  Linjie Li ( Microsoft ) < Lindsey.Li@microsoft.com>
-    Zhengyuan Yang ( Microsoft ) < zhengyuan.yang13@gmail.com>
-      Zhe Gan ( Microsoft ) < pkuganzhe@gmail.com>
-        Lijuan Wang ( Microsoft ) < lijuanw@microsoft.com>
-          Mohit Bansal ( University of North Carolina at Chapel Hill ) < mbansal@cs.unc.edu> -->
 
-
-<section class="hero">
   <div class="hero-body">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
@@ -178,7 +141,7 @@
                   <span class="icon">
                       <i class="fab fa-github"></i>
                   </span>
-                  <span>IterInpaint</span>
+                  <span>IterInpaint (Code and Demo)</span>
                   </a>
               </span>
             </div>
@@ -190,44 +153,40 @@
   </div>
 </section>
 
-<!-- <h4 class="subtitle has-text-centered">
-  <b>HiREST</b>: a holistic, hierarchical benchmark (+joint model) of multimodal retrieval and step-by-step summarization for
-  videos.
-</h4>
-
-<br> -->
-
-
 <section class="hero teaser">
   <!-- <div class="container is-max-desktop"> -->
   <div class="container" >
     <div class="hero-body">
-      <!-- <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/videos/teaser.mp4"
+      <!-- <h2 class="title is-3" style="text-align: center;">Summary Video</h2> -->
+      <video id="teaser" autoplay muted loop height="100%">
+        <source src="./static/videos/teaser_video_compressed.mp4"
                 type="video/mp4">
-      </video> -->
-      <!-- Image teaser -->
-      <!-- <embed src="./static/images/main_figure.pdf" alt="Teaser" width="100%"> -->
+      </video>
 
-      
-      
-      <!-- </h2> -->
+      <!-- <div class="content has-text-centered">
+        Summary video.
+      </div> -->
+        
+    </div>
+  </div>
+</section>
 
+<section class="hero is-small">
+  <div class="hero-body">
+    <h2 class="title is-3" style="text-align: center;">Summary</h2>
+    <div class="container">
       <center>
         <!-- <img src="./static/images/teaser_ID_OOD.png" alt="Teaser" width="80%"> -->
         <img src="./static/images/tinified/teaser_ID_OOD.png" alt="Teaser" width="80%">
       </center>
-      <!-- <h2 class="subtitle has-text-centered"> -->
-
-        <!-- # reco https://arxiv.org/abs/2211.15518
-        # ldm https://arxiv.org/abs/2112.10752 -->
-
+      
       <div class="content has-text-justified">
         <b>LayoutBench</b> evaluates layout-guided image generation models with out-of-distribution (OOD) layouts in four
-        skills: number, position, size, and shape. Existing models (b) <a href="https://arxiv.org/abs/2112.10752">LDM</a> and (c) <a href="https://arxiv.org/abs/2211.15518">ReCo</a> fail on OOD layouts by
+        skills: number, position, size, and shape. Existing models (b) <a href="https://arxiv.org/abs/2112.10752">LDM</a> and
+        (c) <a href="https://arxiv.org/abs/2211.15518">ReCo</a> fail on OOD layouts by
         misplacing objects. (d) <b>IterInpaint</b>, is our new baseline with better generalization on OOD layouts.
       </div>
-
+      
       <center>
         <img src="./static/images/iterinpaint_inference.png" alt="Teaser" width="90%">
       </center>
@@ -239,12 +198,9 @@
         This decomposition makes each generation step easier by allowing the model to focus on generating a single foreground
         object or background.
       </div>
-      
-        
     </div>
   </div>
 </section>
-
 
 <section class="section">
   <div class="container is-max-desktop">
@@ -642,6 +598,31 @@
               id="sync_gif_1">
           </div>
         
+        </div>
+
+        <h3 class="title is-4">COCO Experiments</h3>
+        <div class="content has-text-justified">
+          Although our main focus is constructing a diagnostic LayoutBench benchmark with full scene control and evaluating the
+          layout-guided image generation models, we also test whether  IterInpaint could also perform well on real images on COCO dataset.
+          In the left table, we show some image generation samples from ReCo and IterInpaint from COCO layouts, where both models
+          could locate objects in the correct positions.
+          In the right table, we show some arbitrary custom layouts with COCO objects.
+          While both models are correct in object locations, ReCo sometimes fails to place wrong objects that are frequent in a
+          given layout, while IterInpaint shows a more precise object recognition performance.
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column">
+            <h4 class="title is-5">In-Distribution Layouts</h4>
+            <img class="freezeframe" src="./static/images/coco_ID_layouts.png" alt="Teaser"
+              width="100%">
+          </div>
+
+          <div class="column">
+            <h4 class="title is-5">Out-of-Distribution Layouts</h4>
+            <img class="freezeframe" src="./static/images/coco_OOD_layouts.png" alt="Teaser" width="100%">
+          </div>
+
         </div>
 
 
