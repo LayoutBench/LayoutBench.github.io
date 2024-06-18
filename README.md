@@ -15,7 +15,7 @@ If you find our project useful in your research, please cite the following paper
 @inproceedings{Cho2024LayoutBench,
   author    = {Jaemin Cho and Linjie Li and Zhengyuan Yang and Zhe Gan and Lijuan Wang and Mohit Bansal},
   title     = {Diagnostic Benchmark and Iterative Inpainting for Layout-Guided Image Generation},
-  booktitle = {The First Workshop on the Evaluation of Generative Foundation Models}
+  booktitle = {The First Workshop on the Evaluation of Generative Foundation Models},
   year      = {2024},
 }
 ```
