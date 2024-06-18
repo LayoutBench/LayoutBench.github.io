@@ -12,10 +12,11 @@ This is the repository that contains source code for the [LayoutBench website](h
 If you find our project useful in your research, please cite the following paper:
 
 ```bibtex
-@article{Cho2023LayoutBench,
+@inproceedings{Cho2024LayoutBench,
   author    = {Jaemin Cho and Linjie Li and Zhengyuan Yang and Zhe Gan and Lijuan Wang and Mohit Bansal},
   title     = {Diagnostic Benchmark and Iterative Inpainting for Layout-Guided Image Generation},
-  year      = {2023},
+  booktitle = {The First Workshop on the Evaluation of Generative Foundation Models}
+  year      = {2024},
 }
 ```
 
