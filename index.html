@@ -187,6 +187,17 @@
 
 <section class="hero teaser">
   <!-- <div class="container is-max-desktop"> -->
+  <div class="container">
+    <div class="hero-body" style="font-size:1.5em;text-align: left;">
+      <p>
+        <span style="color: red;">[🚨NEW: Jul 21, 2024]</span>: Check our new <b><a href="https://arxiv.org/abs/2304.06671v3">arXiv-version3</a></b> for the <b><a href="https://github.com/j-min/LayoutBench-COCO">LayoutBench-COCO</a></b> dataset for evaluation of layout-guided image generation models with real objects.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <!-- <div class="container is-max-desktop"> -->
   <div class="container" >
     <div class="hero-body">
       <!-- <h2 class="title is-3" style="text-align: center;">Summary Video</h2> -->
@@ -208,12 +219,11 @@
     <h2 class="title is-3" style="text-align: center;">Summary</h2>
     <div class="container">
       <center>
-        <!-- <img src="./static/images/teaser_ID_OOD.png" alt="Teaser" width="80%"> -->
-        <img src="./static/images/tinified/teaser_ID_OOD.png" alt="Teaser" width="80%">
+        <img src="./static/images/teaser_ID_OOD_with_real.png" alt="Teaser" width="80%">
       </center>
       
       <div class="content has-text-justified">
-        <b>LayoutBench</b> evaluates layout-guided image generation models with out-of-distribution (OOD) layouts in four
+        <b>LayoutBench</b> and <b>LayoutBench-COCO</b> evaluateslayout-guided image generation models with out-of-distribution (OOD) layouts in four
         skills: number, position, size, and shape. Existing models (b) <a href="https://arxiv.org/abs/2112.10752">LDM</a> and
         (c) <a href="https://arxiv.org/abs/2211.15518">ReCo</a> fail on OOD layouts by
         misplacing objects. (d) <b>IterInpaint</b>, is our new baseline with better generalization on OOD layouts.
@@ -316,6 +326,13 @@
 
         <!-- <img src="./static/images/task_overview.png" alt="Teaser" width="100%"> -->
         <img src="./static/images/tinified/task_overview.png" alt="Teaser" width="100%">
+
+
+        <br><br>
+
+        <h2 class="title is-3">LayoutBench-COCO: Evaluation with Real Objects</h2>
+
+        <img src="./static/images/layoutbench_coco_examples.png" alt="Teaser" width="70%">
       
       </div>
     </div>
@@ -384,7 +401,7 @@
 
         </div>
 
-        <h3 class="title is-4">Quantitative Evaluation - Layout Accuracy</h3>
+        <h3 class="title is-4">Evaluation on LayoutBench- Layout Accuracy</h3>
         <div class="content has-text-justified">
           <p>
             The first row shows the layout accuracy based on GT images.
@@ -409,7 +426,7 @@
         Layout accuracy in AP/AP<sub>50</sub>(%) on CLEVR and LayoutBench. Best (highest) values are <b>bolded</b>.
 
         <br><br><br>
-        <h3 class="title is-4">Quantitative Evaluation - Image Quality</h3>
+        <h3 class="title is-4">Evaluation on LayoutBench - Image Quality</h3>
         <div class="content has-text-justified">
           On CLEVR, LDM/ReCo achieves better FID/SceneFID than IterInpint,
           indicating that strong layout control performance of IterImpaint comes with a trade-off in these image quality metrics.
@@ -424,7 +441,7 @@
         Image Quality in FID/SceneFID on CLEVR and LayoutBench. Best (lowest) values are <b>bolded</b>.
 
         <br><br><br>
-        <h3 class="title is-4">Qualitative Evaluation</h3>
+        <h3 class="title is-4">Qualitative Evaluation on LayoutBench</h3>
         <div class="content has-text-justified">
           On CLEVR, all three models can follow the ID layout inputs to place the correct objects precisely.
           On LayoutBench, LDM and ReCo often
@@ -442,7 +459,7 @@
 
 
         <br><br><br>
-        <h3 class="title is-4">Fine-grained Skill Analysis</h3>
+        <h3 class="title is-4">Fine-grained Skill Analysis on LayoutBench</h3>
         <div class="content has-text-justified">
           We perform a more detailed analysis on each LayoutBench skill to understand better the challenges presented in
           LayoutBench and to examine the weakness of each method.
@@ -462,6 +479,28 @@
         In-distribution (same attributes to CLEVR) splits are colored in <a style="color:gray">gray</a>,
         For the Shape skill, the splits are named after their height/width ratio (e.g. H2W1
         split consists of the objects with a 2:1 ratio of height:width).
+
+        <br><br><br>
+        <h3 class="title is-4">Evaluation on LayoutBench-COCO</h3>
+
+        <div class="content has-text-justified">
+          We evaluate four different approaches to layout-guided image generation:
+          (1) <a href="https://arxiv.org/abs/2302.05543">ControlNet</a> using segmentation mask inputs (created by drawing class-specific colored bounding boxes), and
+          three models using bounding box inputs directly:
+          (2) <a href="https://arxiv.org/abs/2301.07093">GLIGEN</a>,
+          (3) <a href="https://arxiv.org/abs/2211.15518">ReCo</a>, and
+          (4) our IterInpaint model trained on COCO.
+          For evaluation, we measure layout accuracy using AP metrics from <a href="https://arxiv.org/abs/2207.02696">YOLOv7</a>, a state-of-the-art object detector.
+
+          The results demonstrate that bounding box-based approaches consistently outperform the segmentation mask-based ControlNet.
+          Among all models, IterInpaint achieves the highest layout accuracy across all four splits of LayoutBench-COCO,
+          with particularly strong performance on the challenging combination split.
+          These results validate IterInpaint's effectiveness at handling complex layout configurations.
+        </div>
+        
+        <img src="./static/images/layoutbench_coco_table.png" alt="Teaser" width="50%">
+
+        <img src="./static/images/layoutbench_coco_gen_examples.png" alt="Teaser" width="100%">
         
 
 
@@ -728,3 +767,4 @@
 </body>
 
 </html>
+
